@@ -1,3 +1,3 @@
-import DropZone from './DropZone.tsx'
+import DropZone from "./DropZone.tsx";
 
 export default DropZone;
