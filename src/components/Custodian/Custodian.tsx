@@ -9,12 +9,12 @@ import {
 import { Box, Grid, Card, CardContent } from "@mui/material";
 import { useState } from "react";
 
-type custodianType = {
+interface custodianType {
   custodianName: string;
   selectedFiles: any;
   setcustodianName: (name: string) => void;
   submitClickHandler: () => void;
-};
+}
 
 const Custodian = (props: custodianType) => {
   const { custodianName, selectedFiles, setcustodianName, submitClickHandler } =

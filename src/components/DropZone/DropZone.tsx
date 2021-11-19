@@ -1,10 +1,16 @@
-import { useRef, useState } from "react";
+import { DragEvent, useRef, useState } from "react";
 import { Wrapper, DropZoneWrapper } from "./DropZone.style";
 import Custodian from "../Custodian/Custodian";
 
-type dropZoneType = {
+interface dropZoneType {
   updateDropZones: () => void;
-};
+}
+
+interface FileType {
+  perc?: number;
+  name?: string;
+  size?: number[];
+}
 
 const DropZone = (props: dropZoneType) => {
   const { updateDropZones } = props;
@@ -18,10 +24,10 @@ const DropZone = (props: dropZoneType) => {
     inputRef?.current?.click();
   };
 
-  const onDropHandler = (e: any) => {
+  const onDropHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const files = e.dataTransfer?.files;
-    filesHandler(files);
+    filesHandler(files || []);
   };
 
   const inputOnChangeHandler = () => {
@@ -29,26 +35,29 @@ const DropZone = (props: dropZoneType) => {
     filesHandler(files);
   };
 
-  const filesHandler = (files: any) => {
-    if (files.length) {
-      const filesArray = Object.keys(files).map((key) => files[key]);
+  const filesHandler = (files: FileList | never[]) => {
+    if (files?.length) {
+      const filesArray: FileType[] = Object.keys(files).map(
+        //@ts-ignore
+        (key) => files[key]
+      );
       setSelectedFiles(filesArray);
     }
   };
 
   const submitClickHandler = () => {
     updateDropZones();
-    const files = [...selectedFiles];
+    const files = [...selectedFiles] as FileType[];
     files.forEach((file) => {
       let percent = 10;
       let funcInter = setInterval(() => {
         if (percent < 100) {
           percent = percent + 10;
-          //@ts-ignore
-          const index = selectedFiles.map((i) => i.name).indexOf(file.name);
-          const filesCopy = [...selectedFiles];
+          const index = selectedFiles
+            .map((i: FileType) => i.name)
+            .indexOf(file.name);
+          const filesCopy: FileType[] = [...selectedFiles];
           if (index > -1) {
-            //@ts-ignore
             filesCopy[index].perc = percent;
             setSelectedFiles(filesCopy);
           }
