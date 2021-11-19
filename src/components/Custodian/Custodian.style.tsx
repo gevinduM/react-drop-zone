@@ -17,7 +17,7 @@ export const SectionWrapper = styled.section`
   margin-top: 15px;
 `;
 
-export const PrgressWrapper = styled.progress`
+export const ProgressWrapper = styled.progress`
   width: 100px;
 `;
 
@@ -31,4 +31,12 @@ export const TextInput = styled(TextField)`
 
 export const SubmitBtm = styled(Button)`
   height: 40px;
+`;
+
+export const HeaderText = styled.text`
+  color: #01579b;
+  margin: 0px;
+  font-size: 25px;
+  text-transform: capitalize;
+  font-weight: 400;
 `;
